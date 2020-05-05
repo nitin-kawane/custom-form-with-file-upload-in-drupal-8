@@ -1,0 +1,5 @@
+name: fileupload
+type: module
+description: Custom form with file upload
+core: 8.x
+package: custom

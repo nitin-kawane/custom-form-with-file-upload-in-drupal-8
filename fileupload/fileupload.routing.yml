@@ -1,0 +1,15 @@
+fileupload.fileupload_controller_display:
+  path: '/fileupload'
+  defaults:
+    _controller: '\Drupal\fileupload\Controller\FileuploadController::display'
+    _title: 'display'
+  requirements:
+    _permission: 'access content'
+
+fileupload.fileupload_form:
+  path: '/fileupload/form'
+  defaults:
+    _form: '\Drupal\fileupload\Form\FileuploadForm'
+    _title: 'MydataForm'
+  requirements:
+    _access: 'TRUE'
