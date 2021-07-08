@@ -91,7 +91,7 @@ class FileuploadForm extends FormBase {
 		$query ->insert('fileupload')
 			->fields($field)
 			->execute();
-		drupal_set_message("succesfully saved");
+		$this->messenger()->addStatus('Successfully saved.');
 
 		$form_state->setRedirect('fileupload.fileupload_controller_display');
 	}
