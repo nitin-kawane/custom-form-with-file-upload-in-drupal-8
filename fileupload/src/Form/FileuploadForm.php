@@ -39,12 +39,12 @@ class FileuploadForm extends FormBase {
 
     $form['my_file'] = [
       '#type' => 'managed_file',
-			'#name' => 'my_file',
-			'#title' => t('File *'),
-			'#size' => 20,
-			'#description' => t('PDF format only'),
-			'#upload_validators' => $validators,
-			'#upload_location' => 'public://my_files/',
+      '#name' => 'my_file',
+      '#title' => t('File *'),
+      '#size' => 20,
+      '#description' => t('PDF format only'),
+      '#upload_validators' => $validators,
+      '#upload_location' => 'public://my_files/',
     ];
 
     $form['employee_name'] = [
