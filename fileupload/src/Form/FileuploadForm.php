@@ -91,6 +91,8 @@ class FileuploadForm extends FormBase {
 		  'employee_name'   =>  $employee_name,
 		  'document_name' =>  $document_name,
     ];
+    
+    // Insert data in table.
 		$query = \Drupal::database();
 		$query ->insert('fileupload')
 			->fields($field)
