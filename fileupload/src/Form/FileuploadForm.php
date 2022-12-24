@@ -48,58 +48,52 @@ class FileuploadForm extends FormBase {
     ];
 
     $form['employee_name'] = [
-			'#type' => 'textfield',
-			'#title' => t('Employee Name:'),
-			'#required' => TRUE,
+      '#type' => 'textfield',
+      '#title' => t('Employee Name:'),
+      '#required' => TRUE,
     ];
 
-		$form['submit'] = [
-			'#type' => 'submit',
-			'#value' => 'save',
-		];
-
-		return $form;
-	}
+    $form['submit'] = [
+      '#type' => 'submit',
+      '#value' => 'save',
+    ];
+    return $form;
+  }
 
   /**
   * {@inheritdoc}
   */
-	public function validateForm(array &$form, FormStateInterface $form_state) {
-
-		$name = $form_state->getValue('employee_name');
-		if(preg_match('/[^A-Za-z ]/', $name)) {
-			$form_state->setErrorByName('employee_name', $this->t('Please enter valid Name'));
-		}
-
-		parent::validateForm($form, $form_state);
-	}
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $name = $form_state->getValue('employee_name');
+    if(preg_match('/[^A-Za-z ]/', $name)) {
+      $form_state->setErrorByName('employee_name', $this->t('Please enter valid Name'));
+    }
+    parent::validateForm($form, $form_state);
+  }
 
   /**
    * {@inheritdoc}
    */
-	public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $field=$form_state->getValues();
+    $fileData = $form_state->getValue('my_file');
+    $newFile = File::load(reset($fileData));
+    $newFile->setPermanent();
+    $document_name = $newFile->getFilename();
+    $employee_name=$field['employee_name'];
 
-		$field=$form_state->getValues();
-		$fileData = $form_state->getValue('my_file');
-
-		$newFile = File::load(reset($fileData));
-		$newFile->setPermanent();
-		$document_name = $newFile->getFilename();
-		$employee_name=$field['employee_name'];
-
-		$field  = [
-		  'employee_name'   =>  $employee_name,
-		  'document_name' =>  $document_name,
+    $field  = [
+     'employee_name'   =>  $employee_name,
+     'document_name' =>  $document_name,
     ];
     
-    // Insert data in table.
-		$query = \Drupal::database();
-		$query ->insert('fileupload')
-			->fields($field)
-			->execute();
-		$this->messenger()->addStatus('Successfully saved.');
-
-		$form_state->setRedirect('fileupload.fileupload_controller_display');
-	}
+     // Insert data in table.
+    $query = \Drupal::database();
+    $query ->insert('fileupload')
+      ->fields($field)
+      ->execute();
+    $this->messenger()->addStatus('Successfully saved.');
+    $form_state->setRedirect('fileupload.fileupload_controller_display');
+  }
 
 }
