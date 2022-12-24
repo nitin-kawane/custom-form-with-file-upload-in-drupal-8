@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class FileuploadForm extends FormBase {
 
-
   /**
    * {@inheritdoc}
    */
@@ -28,13 +27,17 @@ class FileuploadForm extends FormBase {
    * {@inheritdoc}
    */
 	public function buildForm(array $form, FormStateInterface $form_state) {
-		$form = array(
-			  '#attributes' => array('enctype' => 'multipart/form-data'),
-			);
-		$validators = array(
-		  'file_validate_extensions' => array('pdf'),
-		);
-		$form['my_file'] = array(
+		$form = [
+      '#attributes' => [
+        'enctype' => 'multipart/form-data'
+      ],
+    ];
+
+		$validators = [
+		  'file_validate_extensions' => ['pdf'],
+    ];
+
+		$form['my_file'] = [
 			'#type' => 'managed_file',
 			'#name' => 'my_file',
 			'#title' => t('File *'),
@@ -42,12 +45,13 @@ class FileuploadForm extends FormBase {
 			'#description' => t('PDF format only'),
 			'#upload_validators' => $validators,
 			'#upload_location' => 'public://my_files/',
-			);
-		$form['employee_name'] = array(
+    ];
+
+		$form['employee_name'] = [
 			'#type' => 'textfield',
 			'#title' => t('Employee Name:'),
 			'#required' => TRUE,
-		  );
+    ];
 
 		$form['submit'] = [
 			'#type' => 'submit',
@@ -57,9 +61,9 @@ class FileuploadForm extends FormBase {
 		return $form;
 	}
 
-	  /**
-		* {@inheritdoc}
-		*/
+  /**
+  * {@inheritdoc}
+  */
 	public function validateForm(array &$form, FormStateInterface $form_state) {
 
 		$name = $form_state->getValue('employee_name');
@@ -70,9 +74,9 @@ class FileuploadForm extends FormBase {
 		parent::validateForm($form, $form_state);
 	}
 
-	  /**
-	   * {@inheritdoc}
-	   */
+  /**
+   * {@inheritdoc}
+   */
 	public function submitForm(array &$form, FormStateInterface $form_state) {
 
 		$field=$form_state->getValues();
@@ -83,10 +87,10 @@ class FileuploadForm extends FormBase {
 		$document_name = $newFile->getFilename();
 		$employee_name=$field['employee_name'];
 
-		$field  = array(
+		$field  = [
 		  'employee_name'   =>  $employee_name,
 		  'document_name' =>  $document_name,
-		);
+    ];
 		$query = \Drupal::database();
 		$query ->insert('fileupload')
 			->fields($field)
