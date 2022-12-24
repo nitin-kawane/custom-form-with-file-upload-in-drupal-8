@@ -26,19 +26,19 @@ class FileuploadForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-	public function buildForm(array $form, FormStateInterface $form_state) {
-		$form = [
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = [
       '#attributes' => [
         'enctype' => 'multipart/form-data'
       ],
     ];
 
-		$validators = [
-		  'file_validate_extensions' => ['pdf'],
+    $validators = [
+      'file_validate_extensions' => ['pdf'],
     ];
 
-		$form['my_file'] = [
-			'#type' => 'managed_file',
+    $form['my_file'] = [
+      '#type' => 'managed_file',
 			'#name' => 'my_file',
 			'#title' => t('File *'),
 			'#size' => 20,
@@ -47,7 +47,7 @@ class FileuploadForm extends FormBase {
 			'#upload_location' => 'public://my_files/',
     ];
 
-		$form['employee_name'] = [
+    $form['employee_name'] = [
 			'#type' => 'textfield',
 			'#title' => t('Employee Name:'),
 			'#required' => TRUE,
